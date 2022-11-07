@@ -1,0 +1,48 @@
+{
+    "hello": "Hello Baby You are working, great",
+    "shared": {
+        "hi": "Hello"
+    },
+    "account": {        
+        "shared": {
+            "signUp": "Signup",
+            "email": "email",
+            "password": "password",
+            "forgot": "Forgot your login information?"
+        },
+        "register": {
+            "title": "Register"            
+        },
+        "login": {
+            "title": "Login",
+            "button": "login"
+        }
+    },
+    "front": {
+        "navbar": {
+            "product": "Product",
+            "pricing": "Pricing",
+            "about": "About"
+        },
+        "hero": {
+            "subheadline1": "PDF Booklets",
+            "headline1": "Create your own exam booklets, easily",
+            "headline2": "pick a subject of many of them and create your exam booklets"
+        }
+    },
+    "pricing": {
+        "subscribe": "Subscribe"
+    },
+    "app": {
+        "sidebar": {
+            "welcome": "Welcome",
+            "settings": "Settings"
+        },
+        "navbar": {
+            "profile": "Profile",
+            "subscription": "Subscription",
+            "signOut": "Sign out"
+        }
+        
+    }
+}

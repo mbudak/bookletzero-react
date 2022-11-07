@@ -1,0 +1,357 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+  
+  firstName             String
+  lastName              String
+  avatar                String?
+  phone                 String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Security
+  password              Password?
+  notes                 Note[]
+  roles                 UserRole[]
+  active                Boolean                 @default(false)
+  verifyToken           String?
+  passwordHash          String
+
+  readEmails                 EmailRead[]
+  admin                      AdminUser?
+
+  inboundAddresses         InboundAddress[]
+  subscription             UserSubscription[]
+  stripeCustomerId      String?
+
+  userBooklets        UserBooklet[]
+}
+
+
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model AdminUser {
+  userId String @unique
+  role   Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+model Note {
+  id    String @id @default(cuid())
+  title String
+  body  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
+}
+
+model Role {
+  id               String                       @id @default(cuid())
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+  name             String                       @unique
+  description      String
+  type             String
+  assignToNewUsers Boolean
+  isDefault        Boolean
+  order            Int
+  
+  permissions      RolePermission[]
+  
+  users            UserRole[]
+}
+
+model Permission {
+  id          String           @id @default(cuid())
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  name        String           @unique
+  description String
+  type        String
+  isDefault   Boolean
+  order       Int
+  inRoles     RolePermission[]
+  entityId    String?
+  
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+}
+
+model UserRole {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  roleId    String
+  tenantId  String?
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+ 
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId, tenantId])
+}
+
+
+model Registration {
+  id                          String   @id @default(cuid())
+  createdAt                   DateTime @default(now())
+  email                       String   @unique
+  firstName                   String
+  lastName                    String
+  token                       String   @unique
+  ipAddress                   String?
+  company                     String?
+  selectedSubscriptionPriceId String?
+  
+ 
+}
+
+// Learn
+
+model LearnAuthor {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  slug      String     @unique
+  firstName String
+  lastName  String
+  image     String
+  url       String
+  learns     LearnPost[]
+}
+
+model LearnCategory {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  name      String     @unique
+  color     Int
+  learns     LearnPost[]
+}
+
+model LearnTag {
+  id        String        @id @default(cuid())
+  createdAt DateTime      @default(now())
+  name      String        @unique
+  color     Int
+  learns     LearnPostTag[]
+}
+
+model LearnPostTag {
+  id      String   @id @default(cuid())
+  postId  String
+  tagId   String
+  learn   LearnPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag     LearnTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+}
+
+
+model LearnPost {
+  id              String        @id @default(cuid())
+  createdAt       DateTime      @default(now())
+  slug            String        @unique
+  title           String
+  description     String
+  date            DateTime
+  image           String
+  content         String
+  totalQuestions  Int
+  published       Boolean
+  
+  authorId        String
+  author              LearnAuthor    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  categoryId      String
+  category            LearnCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  tags                LearnPostTag[]  
+  userSubscriptions     UserSubscription[]
+
+  // Price
+  pricingModel  Int?
+  stripeId      String?
+  badge         String?
+  features      SubscriptionFeature[]
+  prices        SubscriptionPrice[]
+}
+
+
+
+model UserBooklet {
+  id                    String        @id @default(cuid())
+  userId                String
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+model UserSubscription {
+  id                    String        @id @default(cuid())
+  userId                String
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  learnPostId           String
+  learnPost             LearnPost  @relation(fields: [learnPostId], references: [id], onDelete: Cascade)
+    
+  stripeSubscriptionId  String?
+  subscriptionPriceId   String?
+  quantity              Int?
+  
+  subscriptionPrice     SubscriptionPrice?  @relation(fields: [subscriptionPriceId], references: [id])
+}
+
+
+// Email
+model InboundAddress {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address   String  @unique 
+  email     Email[]
+}
+
+model Email {
+  id                     String                  @id @default(cuid())
+  InboundAddressId String?
+  InboundAddress   InboundAddress?   @relation(fields: [InboundAddressId], references: [id], onDelete: Cascade)
+  messageId              String                  @unique
+  type                   String // inbound, outbound
+  date                   DateTime
+  subject                String
+  fromEmail              String
+  fromName               String?
+  toEmail                String
+  toName                 String?
+  textBody               String
+  htmlBody               String
+  // parentEmailId String?
+  // parentEmail   Email?            @relation(name: "replies", fields: [parentEmailId], references: [id], onDelete: Cascade)
+  reads                  EmailRead[]
+  attachments            EmailAttachment[]
+  cc                     EmailCc[]
+  // replies       Email[]           @relation(name: "replies")
+  // transitions            RowWorkflowTransition[]
+}
+
+model EmailRead {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  emailId   String
+  email     Email    @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model EmailCc {
+  id      String  @id @default(cuid())
+  emailId String
+  toEmail String
+  toName  String?
+  email   Email   @relation(fields: [emailId], references: [id], onDelete: Cascade)
+}
+
+model EmailAttachment {
+  id              String  @id @default(cuid())
+  emailId         String
+  name            String
+  type            String
+  length          Int
+  content         String
+  publicUrl       String?
+  storageBucket   String?
+  storageProvider String?
+  email           Email   @relation(fields: [emailId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+// Subscriptions
+
+
+
+model SubscriptionPrice {
+  id                    String               @id @default(cuid())
+  subscriptionProductId String
+  stripeId              String
+  type                  Int
+  billingPeriod         Int
+  price                 Int
+  currency              String
+  trialDays             Int
+  active                Boolean
+  subscriptionProduct   LearnPost  @relation(fields: [subscriptionProductId], references: [id], onDelete: Cascade)
+  userSubscriptions     UserSubscription[]
+}
+
+model SubscriptionFeature {
+  id                    String              @id @default(cuid())
+  subscriptionProductId String
+  order                 Int
+  title                 String
+  name                  String
+  type                  Int
+  value                 Int
+  subscriptionProduct   LearnPost @relation(fields: [subscriptionProductId], references: [id], onDelete: Cascade)
+}
+
+model QuestionClass {  
+  id              Int     @id @default(autoincrement())
+  successorId     Int?    @unique
+  successor       QuestionClass?   @relation("QuestionClassHistory", fields: [successorId], references: [id])
+  predecessor     QuestionClass?   @relation("QuestionClassHistory")
+
+  isRoot          Boolean
+  
+  title           String
+  path            String
+
+  createdBy       String
+
+  total       Int?
+  cumulative  Int?
+  waiting     Int?
+  rejected    Int?
+  obsolote    Int?
+}
+
+
+model Question {
+  id              String        @id @default(cuid())
+  createdAt       DateTime      @default(now())
+
+  question        String
+  details         String
+  summary         String
+
+}
+
+model Exam {
+  id              String        @id @default(cuid())
+  createdAt       DateTime      @default(now())
+  title           String
+  description     String
+
+}
+
