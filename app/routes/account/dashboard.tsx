@@ -2,7 +2,7 @@ import ProfileBanner from "~/components/app/ProfileBanner";
 import { useLoaderData } from "@remix-run/react";
 import { AccountLoaderData, loadAccountData, useAccountData } from "~/utils/data/useAccountData";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { SampleUser } from "~/utils/db/users.db.server";
+
 
 type LoaderData = AccountLoaderData & {
     title: string;    

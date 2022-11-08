@@ -92,32 +92,6 @@ export default function ProfileButton({ layout }: Props) {
                   Profile
                 </Link>
 
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, "settings/members")}
-                >
-                  Members
-                </Link>
-
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, "settings/roles")}
-                >
-                  Roles
-                </Link>
-
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, "settings/groups")}
-                >
-                  Groups
-                </Link>
 
                 <Link
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
@@ -128,41 +102,6 @@ export default function ProfileButton({ layout }: Props) {
                   Supscriptions
                 </Link>
 
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, "settings/account")}
-                >
-                  Account
-                </Link>
-
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, `settings/linked-accounts`)}
-                >
-                  Linked Accounts
-                </Link>
-
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, `settings/api`)}
-                >
-                  Api Keys
-                </Link>
-
-                <Link
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  role="menuitem"
-                  onClick={closeDropdownUser}
-                  to={UrlUtils.currentTenantUrl(params, "settings/audit-trails")}
-                >
-                  Logs
-                </Link>
 
                 <div className="border-t border-gray-200 mt-1"></div>
               </>
