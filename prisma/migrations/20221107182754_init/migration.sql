@@ -282,6 +282,7 @@ CREATE TABLE "SubscriptionFeature" (
 CREATE TABLE "QuestionClass" (
     "id" SERIAL NOT NULL,
     "successorId" INTEGER,
+    "isRoot" BOOLEAN NOT NULL,
     "title" TEXT NOT NULL,
     "path" TEXT NOT NULL,
     "createdBy" TEXT NOT NULL,
