@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 import Header from "./Header";
 
 export default function Hero() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   return (
     <div className="relative">
       <Header />
@@ -45,44 +45,44 @@ export default function Hero() {
             <div>
               <div className="sm:text-center md:max-w-6xl md:mx-auto lg:col-span-6 space-y-3">
                 <span className="block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base">
-                  {t("front.hero.subheadline1")}
+                  BookletZero is an exam booklet generator, easily.
                 </span>
                 <h1 className="font-extrabold text-5xl sm:text-5xl md:text-5xl lg:text-7xl flex flex-col">
-                  <span>{t("front.hero.headline1")}</span>
+                  <span>Power your knowledge with pdf exam booklets</span>
                 </h1>
                 <div className="relative z-10 pb-10 text-gray-500 text-lg md:text-2xl sm:text-center leading-normal md:leading-9 space-y-3">
                   {/* <p className="sm:text-2xl mx-auto max-w-4xl font-medium text-gray-700 dark:text-gray-400">{t("front.hero.headline2")}</p> */}
                   <p className="sm:text-xl mx-auto max-w-4xl">
-                    {t("front.hero.headline2")} - {t("front.hero.headline3")}
+                    Strengthen yourself to prepare the next exam. 
                   </p>
                 </div>
 
                 <div className="mt-2 mx-auto lg:mx-0 sm:flex justify-center md:mt-2">
                   <div className="rounded-md shadow">
                     <a
-                      href="/learn"
+                      href="/register"
                       target="_self"
                       rel="noreferrer"
                       className="w-full flex items-center space-x-2 justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md bg-theme-500 text-theme-50 hover:bg-theme-600 md:py-4 md:text-lg md:px-7"
                     >
-                      <div>Learns</div>
+                      <div>Try for Free</div>
                     </a>
                   </div>
                   
 
                   <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
                     <Link
-                      to="/docs"
+                      to="/learn"
                       className="w-full flex items-center justify-center px-5 py-3 border border-gray-200 dark:border-gray-800 text-base font-medium rounded-md text-theme-600 dark:text-theme-400 bg-white hover:bg-gray-50 dark:bg-gray-900 dark:hover:text-theme-500 md:py-4 md:text-lg md:px-7"
                     >
-                      Docs
+                      Learn List
                     </Link>
                   </div>
                 </div>
 
                 <div className="mt-8 space-y-3">
                   
-                    Find your interested topic and generate exam booklets, easy. All question databases frequently updated.
+                    Find your interested topic and generate exam booklets easily from the frequently updated question databases.
                   
                 </div>
               </div>
