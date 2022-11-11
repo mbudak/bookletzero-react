@@ -50,7 +50,7 @@ export default function AdminNavigationRoute() {
           <ButtonSecondary to=".">
                 <span>Reload</span>
           </ButtonSecondary>
-          <ButtonPrimary disabled={!adminData.permissions.includes("admin.blog.create")} to={"/admin/learn/new"}>
+          <ButtonPrimary to={"/admin/classes/new"}>
                 <span>New</span>
           </ButtonPrimary>
 
