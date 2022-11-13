@@ -36,7 +36,7 @@ export default function PostsTable({ items }: Props) {
         DateUtils.dateYMDHMS(f.date).includes(searchInput.toUpperCase()) ||
         f.description?.toString().toUpperCase().includes(searchInput.toUpperCase()) ||
         f.content?.toString().toUpperCase().includes(searchInput.toUpperCase()) ||
-        // f.readingTime?.toString().toUpperCase().includes(searchInput.toUpperCase()) ||
+        
         (f.author.firstName + " " + f.author.lastName)?.toString().toUpperCase().includes(searchInput.toUpperCase()) ||
         f.category.name?.toString().toUpperCase().includes(searchInput.toUpperCase()) ||
         f.tags

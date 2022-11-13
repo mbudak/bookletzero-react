@@ -27,14 +27,16 @@ export default function AddQuestionClass() {
 
   function confirmSave() {
     const form = new FormData();
-    console.log('form', form);
     
+    console.log('form', form);
+    alert('coming up')
     submit(form, {
       method: "post",
     });
   }
-  function goToProfile() {
-    navigate("/app/employees");
+  
+  function goToQuestionClasses() {
+    navigate("/admin/classes");
   }
 
     return (
@@ -100,7 +102,7 @@ export default function AddQuestionClass() {
         }
       })()}
       <ConfirmModal ref={confirmCreate} onYes={confirmSave} />
-      <SuccessModal ref={successModal} onClosed={goToProfile} />
+      <SuccessModal ref={successModal} onClosed={goToQuestionClasses} />
       <ErrorModal ref={errorModal} />
     </div>
 

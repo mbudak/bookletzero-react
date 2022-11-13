@@ -22,8 +22,8 @@ const SuccessModal = ({ className, onClosed }: Props, ref: Ref<RefSuccessModal>)
   const [closeText, setCloseText] = useState<string>();
 
   useEffect(() => {
-    setTitle(t("shared.success").toString());
-    setCloseText(t("shared.close"));
+    setTitle(t("Success").toString());
+    setCloseText("Close");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

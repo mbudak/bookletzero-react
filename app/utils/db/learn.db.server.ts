@@ -111,7 +111,7 @@ export async function getLearnPost(idOrSlug: string): Promise<LearnPostWithDetai
     date: Date;
     image: string;
     content: string;
-    readingTime: string;
+    totalQuestions: number;
     published: boolean;
     authorId: string;
     categoryId: string;
@@ -152,7 +152,7 @@ export async function getLearnPost(idOrSlug: string): Promise<LearnPostWithDetai
         date: data.date,
         image: data.image,
         content: data.content,
-        readingTime: data.readingTime,
+        totalQuestions: data.totalQuestions,
         published: data.published,
         authorId: data.authorId,
         categoryId: data.categoryId,
@@ -176,7 +176,7 @@ export async function getLearnPost(idOrSlug: string): Promise<LearnPostWithDetai
       date: Date;
       image: string;
       content: string;
-      readingTime: string;
+      totalQuestions: number;
       published: boolean;
       authorId: string;
       categoryId: string;
@@ -194,7 +194,7 @@ export async function getLearnPost(idOrSlug: string): Promise<LearnPostWithDetai
         date: data.date,
         image: data.image,
         content: data.content,
-        readingTime: data.readingTime,
+        totalQuestions: data.totalQuestions,
         published: data.published,
         authorId: data.authorId,
         categoryId: data.categoryId,

@@ -114,7 +114,12 @@ export default function QuestionClassTable({items}: Props) {
                                   <div className="flex flex-col">
                                     <div className="">
                                       <span className="font-medium">Total</span>{" "}
-                                      {item.id && <span className="text-gray-400 italic">{item.cumulative}</span>}
+                                      
+                                      <div>
+                                        <a href={"/admin/questions/" + item.id} target="_self" rel="noreferrer" className="text-gray-400 underline">
+                                          {item.cumulative || 0}
+                                        </a>
+                                      </div>
                                     </div>
                                     {/* <PostTags items={item.tags} /> */} 
                                   </div>
@@ -131,10 +136,8 @@ export default function QuestionClassTable({items}: Props) {
                                 </td>
                                 <td>
                                   <div className="flex items-center space-x-2">
-                                    <ButtonTertiary to={"/admin/learn/" + item.id}>Edit</ButtonTertiary>
-                                    <ButtonTertiary to={"/learn/" + item.id} target="_blank">
-                                      Preview
-                                    </ButtonTertiary>
+                                    <ButtonTertiary to={"/admin/classes/edit/" + item.id}>Edit</ButtonTertiary>
+                                    
                                   </div>
                                 </td>
                               </tr>

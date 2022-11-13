@@ -50,7 +50,7 @@ export default function PostForm({ item, authors, categories, tags, canUpdate = 
   const [postTags, setPostTags] = useState("");
   const [date, setDate] = useState<Date | undefined>(item?.date ?? new Date());
   const [description, setDescription] = useState(item?.description ?? "");
-  const [readingTime, setReadingTime] = useState(item?.readingTime ?? "");
+  
   const [published, setPublished] = useState(item?.published ?? false);
   const [image, setImage] = useState(item?.image ?? "");
   const [content, setContent] = useState(item?.content ?? ``);
@@ -122,7 +122,7 @@ export default function PostForm({ item, authors, categories, tags, canUpdate = 
   //   form.set("tags", postTags);
   //   form.set("date", date);
   //   form.set("description", description);
-  //   form.set("reading-time", readingTime);
+
   //   form.set("image", image);
   //   form.set("content", content);
   //   submit(form, {
@@ -252,15 +252,6 @@ export default function PostForm({ item, authors, categories, tags, canUpdate = 
             required
           />
 
-          <InputText
-            disabled={!canUpdate}
-            className="col-span-6 md:col-span-4"
-            name="reading-time"
-            title={t("models.post.readingTime")}
-            value={readingTime}
-            setValue={setReadingTime}
-            maxLength={10}
-          />
           <InputCheckbox
             disabled={!canUpdate}
             className="col-span-6 md:col-span-4"

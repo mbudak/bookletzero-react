@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const image = form.get("image")?.toString() ?? "";
     const markdown = marked(content);
     const published = Boolean(form.get("published"));
-    const readingTime = form.get("reading-time")?.toString() ?? "";
+    
     const authorId = form.get("author")?.toString() ?? "";
     const categoryId = form.get("category")?.toString() ?? "";
     const tags = form.get("tags")?.toString() ?? "";
@@ -64,7 +64,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         date: new Date(date),
         image,
         content: markdown,
-        readingTime,
+        totalQuestions: 0,
         published,
         authorId,
         categoryId,
