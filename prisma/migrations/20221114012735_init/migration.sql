@@ -169,14 +169,6 @@ CREATE TABLE "LearnPost" (
 );
 
 -- CreateTable
-CREATE TABLE "UserBooklet" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-
-    CONSTRAINT "UserBooklet_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "UserSubscription" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -299,21 +291,45 @@ CREATE TABLE "QuestionClass" (
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "question" TEXT NOT NULL,
-    "details" TEXT NOT NULL,
-    "summary" TEXT NOT NULL,
+    "groupId" TEXT NOT NULL,
+    "questionClassId" INTEGER NOT NULL,
+    "qBody" TEXT NOT NULL,
+    "qImageUrl" TEXT NOT NULL,
+    "qDetails" TEXT NOT NULL,
+    "qSummary" TEXT NOT NULL,
+    "qExternalLink" TEXT NOT NULL,
+    "isAccepted" BOOLEAN NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Exam" (
+CREATE TABLE "Booklet" (
     "id" TEXT NOT NULL,
+    "bookletCode" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "score" DECIMAL(65,30) NOT NULL,
+    "totalQuestions" INTEGER NOT NULL,
 
-    CONSTRAINT "Exam_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Booklet_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "BookletQuestion" (
+    "id" TEXT NOT NULL,
+    "bookletId" TEXT NOT NULL,
+    "orderNumber" INTEGER NOT NULL,
+    "questionId" TEXT NOT NULL,
+    "qBody" TEXT NOT NULL,
+    "qImageUrl" TEXT NOT NULL,
+    "qDetails" TEXT NOT NULL,
+    "qAnswer" TEXT NOT NULL,
+    "score" DECIMAL(65,30),
+
+    CONSTRAINT "BookletQuestion_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -395,9 +411,6 @@ ALTER TABLE "LearnPost" ADD CONSTRAINT "LearnPost_authorId_fkey" FOREIGN KEY ("a
 ALTER TABLE "LearnPost" ADD CONSTRAINT "LearnPost_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "LearnCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserBooklet" ADD CONSTRAINT "UserBooklet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "UserSubscription" ADD CONSTRAINT "UserSubscription_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -432,3 +445,12 @@ ALTER TABLE "SubscriptionFeature" ADD CONSTRAINT "SubscriptionFeature_subscripti
 
 -- AddForeignKey
 ALTER TABLE "QuestionClass" ADD CONSTRAINT "QuestionClass_successorId_fkey" FOREIGN KEY ("successorId") REFERENCES "QuestionClass"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Question" ADD CONSTRAINT "Question_questionClassId_fkey" FOREIGN KEY ("questionClassId") REFERENCES "QuestionClass"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Booklet" ADD CONSTRAINT "Booklet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BookletQuestion" ADD CONSTRAINT "BookletQuestion_bookletId_fkey" FOREIGN KEY ("bookletId") REFERENCES "Booklet"("id") ON DELETE CASCADE ON UPDATE CASCADE;

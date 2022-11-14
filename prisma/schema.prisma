@@ -34,7 +34,8 @@ model User {
   subscription             UserSubscription[]
   stripeCustomerId      String?
 
-  userBooklets        UserBooklet[]
+  
+  booklets            Booklet[]
 }
 
 
@@ -198,14 +199,6 @@ model LearnPost {
   prices        SubscriptionPrice[]
 }
 
-
-
-model UserBooklet {
-  id                    String        @id @default(cuid())
-  userId                String
-  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-}
 model UserSubscription {
   id                    String        @id @default(cuid())
   userId                String
@@ -334,24 +327,60 @@ model QuestionClass {
   waiting     Int?
   rejected    Int?
   obsolote    Int?
+
+  questions       Question[]
 }
 
 
 model Question {
   id              String        @id @default(cuid())
   createdAt       DateTime      @default(now())
+  
+  groupId         String
 
-  question        String
-  details         String
-  summary         String
+  questionClassId Int
+  questionClass   QuestionClass @relation(fields: [questionClassId], references: [id], onDelete: Cascade)
 
+
+  qBody            String
+  qImageUrl        String
+  qDetails         String
+  qSummary         String
+  qExternalLink    String
+
+  isAccepted       Boolean
 }
 
-model Exam {
+model Booklet {
+  id                String        @id @default(cuid())
+  bookletCode       String
+
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt         DateTime      @default(now())
+  title             String
+  description       String
+  score             Decimal
+
+  totalQuestions    Int
+  bookletQuestions  BookletQuestion[]
+}
+
+model BookletQuestion {
   id              String        @id @default(cuid())
-  createdAt       DateTime      @default(now())
-  title           String
-  description     String
 
+  bookletId       String
+  booklet         Booklet @relation(fields: [bookletId], references: [id], onDelete: Cascade)
+
+  orderNumber     Int
+  
+  questionId      String
+
+  qBody           String
+  qImageUrl       String
+  qDetails        String
+  qAnswer         String
+
+  score           Decimal?
 }
-
