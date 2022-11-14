@@ -45,13 +45,11 @@ type ActionData = {
   success?: string;
   fields?: {
     title: string;
-    
-    
   };
 };
 
 // const badRequest = (data: ActionData) => json(data, { status: 400 });
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   
 
   
@@ -59,9 +57,9 @@ export const action: ActionFunction = async ({ request }) => {
   const userInfo = await getUserInfo(request);
   const form = await request.formData();
   const title = form.get("title")?.toString().trim() ?? "";
+  const predecessorId = params.id || "";
 
-  const questionClass = await CreateQuestionClass(userInfo.userId, title);
-  console.log('result data', questionClass);
+  const questionClass = await CreateQuestionClass(userInfo.userId, predecessorId, title);
 
   return json({
     success: "Record saved",

@@ -44,15 +44,21 @@ export async function questionClassUpdate(id: string, data: {
     });
 }
 
-export async function CreateQuestionClass(createdBy: string, title: string){
+export async function CreateQuestionClass(createdBy: string, predecessorId: string, title: string){
     const path = "ATPL";
+    const predId = Number(predecessorId);
 
     return await db.questionClass.create({
         data: {
             createdBy,
             title,
             isRoot: false,
-            path
+            path,
+            predecessor: {
+                connect: {
+                    id: predId
+                }
+            }
         }
     })
 

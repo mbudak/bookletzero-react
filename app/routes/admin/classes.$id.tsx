@@ -12,6 +12,7 @@ import QuestionClassTable from "~/components/questionClass/QuestionClassTable";
 
 type LoaderData = AdminLoaderData & {
   title: string;
+  id: any;
   items: any;
 };
 
@@ -25,6 +26,7 @@ export let loader: LoaderFunction = async ({ request, params }) => {
   const data: LoaderData = {
     ...adminData,
     title: `${"Dashboard"} | ${process.env.APP_NAME}`,
+    id: params.id,
     items
   };
 
@@ -38,6 +40,7 @@ export const meta: MetaFunction = ({ data }) => ({
 export default function AdminNavigationRoute() {
   const data = useLoaderData<LoaderData>();
   
+
   const adminData = useAdminData();
 
 
@@ -49,7 +52,7 @@ export default function AdminNavigationRoute() {
         <div className="flex items-center space-x-2">
           
           <Link
-                  to="/admin/classes/new"
+                  to={"/admin/classes/new/" + data.id}
                   className="inline-flex space-x-2 items-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-theme-600 hover:bg-theme-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-500"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
