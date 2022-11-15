@@ -34,7 +34,7 @@ export default function Hero() {
 
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">            
-            <img src={HeroImage} className="h-fit" alt="BookletZero Hero Image"/>
+            <img src={HeroImage} className="h-fit h-4/5" alt="BookletZero Hero Image"/>
         </div>                
     </div>
 </section>

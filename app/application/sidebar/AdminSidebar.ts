@@ -53,9 +53,9 @@ export const AdminSidebar: SideBarItem[] = [
         icon: SvgIcon.BLOG,       
       },
       {
-        title: "Events & Webhooks",
-        path: "/admin/events",
-        icon: SvgIcon.EVENTS,      
+        title: "Questions",
+        path: "/admin/questions",
+        icon: SvgIcon.COMPONENTS,      
       },
       {
         title: "Question Classes",
