@@ -51,7 +51,7 @@ export async function CreateQuestionClass(createdBy: string, predecessorId: stri
     return await db.questionClass.create({
         data: {
             createdBy,
-            title,
+            title: title,
             isRoot: false,
             path,
             predecessor: {

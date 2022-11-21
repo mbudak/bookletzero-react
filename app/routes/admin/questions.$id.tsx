@@ -44,7 +44,6 @@ export default function AdminNavigationRoute() {
   
   const adminData = useAdminData();
 
-
   return (
     <div>
     <div className="bg-white shadow-sm border-b border-gray-300 w-full py-2">
@@ -53,7 +52,7 @@ export default function AdminNavigationRoute() {
         <div className="flex items-center space-x-2">
           
           <Link
-                  to={"/admin/questions/new/" + data.id}
+                  to={"/admin/question/new/" + data.id}
                   className="inline-flex space-x-2 items-center px-2 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-theme-600 hover:bg-theme-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-theme-500"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -71,7 +70,7 @@ export default function AdminNavigationRoute() {
               <QuestionsTable items={data.items}/>
       </div>
       
-      <Outlet />
+      {/* <Outlet /> */}
       </div>      
   );
 }

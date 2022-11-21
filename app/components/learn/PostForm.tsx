@@ -130,7 +130,7 @@ export default function PostForm({ item, authors, categories, tags, canUpdate = 
   //   });
   // }
 
-  return (
+  return ( 
     <Form method="post" className="space-y-6">
       <input type="hidden" readOnly name="action" value={item ? "edit" : "create"} />
       <InputGroup title="SEO">

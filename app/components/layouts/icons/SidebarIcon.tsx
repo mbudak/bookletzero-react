@@ -1,7 +1,7 @@
 import { SvgIcon } from "~/application/enums/shared/SvgIcon";
 
 import IconAdmin from "./IconAdmin";
-import IconTenants from "./IconTenants";
+
 import IconUsers from "./IconUsers";
 import IconPricing from "./IconPricing";
 import IconNavigation from "./IconNavigation";
@@ -38,6 +38,7 @@ export default function SidebarIcon({ className, item }: Props) {
   return (
     <span>
       {/* Core */}
+      {item.icon === SvgIcon.ADMIN && <IconAdmin className={className} />}
       {item.icon === SvgIcon.USERS && <IconUsers className={className} />}
       {item.icon === SvgIcon.ROLES && <IconRoles className={className} />}
       {item.icon === SvgIcon.PRICING && <IconPricing className={className} />}

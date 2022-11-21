@@ -336,7 +336,7 @@ model Question {
   id              String        @id @default(cuid())
   createdAt       DateTime      @default(now())
   
-  groupId         String
+  groupId         String?
 
   questionClassId Int
   questionClass   QuestionClass @relation(fields: [questionClassId], references: [id], onDelete: Cascade)

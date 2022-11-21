@@ -60,7 +60,7 @@ export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
   const title = form.get("title")?.toString().trim() ?? "";
 
-  const questionClass = await CreateQuestionClass(userInfo.userId, title);
+  const questionClass = await CreateQuestionClass(userInfo.userId, "", title);
   console.log('result data', questionClass);
 
   return json({
