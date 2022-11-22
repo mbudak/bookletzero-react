@@ -22,8 +22,8 @@ const ErrorModal = ({ className, onClosed }: Props, ref: Ref<RefErrorModal>) => 
   const [closeText, setCloseText] = useState<string>();
 
   useEffect(() => {
-    setTitle(t("shared.error").toString());
-    setCloseText(t("shared.close"));
+    setTitle("Error");
+    setCloseText("Close");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,7 +34,7 @@ const ErrorModal = ({ className, onClosed }: Props, ref: Ref<RefErrorModal>) => 
     if (_description) {
       setDescription(_description);
     } else if (_title) {
-      setTitle(t("shared.error").toString());
+      setTitle("Error");
       setDescription(_title);
     }
     setOpen(true);

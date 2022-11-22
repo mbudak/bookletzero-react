@@ -74,7 +74,7 @@ export default function PostForm({ item, authors, categories, tags, canUpdate = 
     }
 
     if (actionData?.error) {
-      errorModal.current?.show(t("shared.error"), actionData.error);
+      errorModal.current?.show("Error", actionData.error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData]);
