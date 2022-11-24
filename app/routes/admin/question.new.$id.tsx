@@ -1,30 +1,20 @@
-// import { BlogAuthor, BlogCategory, BlogTag } from "@prisma/client";
 import { marked } from "marked";
-import { useTranslation } from "react-i18next";
-import { ActionFunction, json, LoaderFunction, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-// import PostForm from "~/components/blog/PostForm";
-import Breadcrumb from "~/components/ui/breadcrumbs/Breadcrumb";
+import { ActionFunction, json, LoaderFunction, MetaFunction, redirect } from "@remix-run/server-runtime";
+import { Form,  useActionData, useLoaderData, useTransition } from "@remix-run/react";
 
-// import { BlogPostWithDetails, createBlogPost, getAllAuthors, getAllCategories, getAllTags } from "~/utils/db/blog.db.server";
-import { verifyUserHasPermission } from "~/utils/helpers/PermissionsHelper";
-import { QuestionWithDetails } from "~/utils/db/questions.db.server";
+import Breadcrumb from "~/components/ui/breadcrumbs/Breadcrumb";
+import { createQuestion, QuestionWithDetails } from "~/utils/db/questions.db.server";
 import QuestionForm from "~/components/question/QuestionForm";
+
+import { AdminLoaderData, loadAdminData } from "~/utils/data/useAdminData";
 
 type LoaderData = {
   questionClassId: number,
-  // authors: BlogAuthor[];
-  // categories: BlogCategory[];
-  // tags: BlogTag[];
+
 };
 export let loader: LoaderFunction = async ({ request, params }) => {
-
-  // await verifyUserHasPermission(request, "admin.blog.create");
   const data: LoaderData = {
-    questionClassId: Number(params.id),
-    // authors: await getAllAuthors(),
-    // categories: await getAllCategories(),
-    // tags: await getAllTags(),
+    questionClassId: Number(params.id),    
   };
   return json(data);
 };
@@ -38,11 +28,13 @@ export type QuestionActionData = {
   createdQuestion?: QuestionWithDetails | null;
 };
 const badRequest = (data: QuestionActionData) => json(data, { status: 400 });
-export const action: ActionFunction = async ({ request }) => {
+
+export const action: ActionFunction = async ({ request, params }) => {  
   
   const form = await request.formData();
   const action = form.get("action")?.toString() ?? "";
   const content = form.get("content")?.toString() ?? "";
+
   if (action === "preview") {
     const data: QuestionActionData = {
       preview: {
@@ -51,44 +43,43 @@ export const action: ActionFunction = async ({ request }) => {
       },
     };
     return json(data);
-  } else if (action === "create") {
-    const title = form.get("title")?.toString() ?? "";
-    const slug = form.get("slug")?.toString() ?? "";
-    const description = form.get("description")?.toString() ?? "";
-    const date = form.get("date")?.toString() ?? "";
-    const image = form.get("image")?.toString() ?? "";
-    const markdown = marked(content);
-    const published = Boolean(form.get("published"));
-    const readingTime = form.get("reading-time")?.toString() ?? "";
-    const authorId = form.get("author")?.toString() ?? "";
-    const categoryId = form.get("category")?.toString() ?? "";
-    const tags = form.get("tags")?.toString() ?? "";
-
+  } else if (action === "create") {  
+    
+    const questionClassId = Number(params.id);
+    const qBody = form.get("qBody")?.toString() ?? "";
+    const qImageUrl = form.get("qImageUrl")?.toString() ?? "";
+    const qDetails = form.get("qDetails")?.toString() ?? "";
+    const qSummary = form.get("qSummary")?.toString() ?? "";
+    const qExternalLink = form.get("qExternalLink")?.toString() ?? "";
+    const qAccepted = false;
+    
+    
     try {
-      /*const post = await createBlogPost({
-        slug,
-        title,
-        description,
-        date: new Date(date),
-        image,
-        content: markdown,
-        readingTime,
-        published,
-        authorId,
-        categoryId,
-        tagNames: tags.split(",").filter((f) => f.trim() != ""),
+      
+      const question = await createQuestion(
+        "", // not grouped yet
+        questionClassId,
+        qBody,
+        qImageUrl,
+        qDetails,
+        qSummary,
+        qExternalLink,
+        qAccepted // not accepted yet
+      ).catch(err => {
+        console.log('err', err)
       });
+      console.log('question', question);
 
-      if (post) {
-        return redirect("/blog/" + slug);
+      if (question) {
+        return redirect("/admin/question/" + question.id);
       } else {
-        return badRequest({ error: "Could not create post" });
+        return badRequest({ error: "Could not create question"});
       }
-      */
-      return redirect("/question/" + "idhere");
+            
     } catch (e) {
       return badRequest({ error: JSON.stringify(e) });
     }
+    
   } else {
     return badRequest({ error: "Form error" });
   }
